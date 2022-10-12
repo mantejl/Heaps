@@ -1,0 +1,8 @@
+*.dSYM/
+*.vscode
+*.o
+llfilter.txt
+llrecTest.txt
+stack_test
+llrec-Test 
+llrec
