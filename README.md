@@ -1,1 +1,0 @@
-For some reason, I cannot set the head list to null in llpivot. I asked multiple CPs about what I should do to solve it but none of them were able to give me a proper response. 

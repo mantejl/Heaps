@@ -92,6 +92,7 @@ int main(int argc, char* argv[])
     Node *smaller; 
     Node *larger; 
     llpivot(head, smaller, larger, 10); 
+    print(head); 
     print(smaller); 
     print(larger); 
 

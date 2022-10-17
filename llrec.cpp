@@ -8,20 +8,22 @@ using namespace std;
 
 void llpivot(Node *&head, Node *&smaller, Node *&larger, int pivot)
 {
-    if (!head)
+    Node* tmp = head; 
+    head = NULL;
+    if (!tmp)
     {
         smaller = nullptr;
         larger = nullptr;
         return;
     }
-    else if (head->val <= pivot)
+    else if (tmp->val <= pivot)
     {
-        smaller = head;
-        llpivot(head->next, smaller->next, larger, pivot);
+        smaller = tmp;
+        llpivot(tmp->next, smaller->next, larger, pivot);
     }
-    else if (head->val > pivot)
+    else if (tmp->val > pivot)
     {
-        larger = head;
-        llpivot(head->next, smaller, larger->next, pivot);
+        larger = tmp;
+        llpivot(tmp->next, smaller, larger->next, pivot);
     }
 }
