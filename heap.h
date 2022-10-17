@@ -2,6 +2,9 @@
 #define HEAP_H
 #include <functional>
 #include <stdexcept>
+#include <algorithm>
+#include <utility>
+#include <vector>
 
 template <typename T, typename PComparator = std::less<T> >
 class Heap
@@ -61,13 +64,50 @@ public:
 
 private:
   /// Add whatever helper functions and data members you need below
+  std::vector<T> items; 
+  PComparator compare; 
+  int n; 
 
+  // trickle down function 
+  void trickleDown(int index); 
 
-
+  // trickle up function 
+  void trickleUp(int index); 
 
 };
 
+template <typename T, typename PComparator>
+Heap<T,PComparator>::Heap(int m, PComparator c) {
+  compare = c; 
+  n = m;  
+  items.push_back(NULL); 
+}
+
+template <typename T, typename PComparator>
+Heap<T,PComparator>::~Heap() {
+}
+
 // Add implementation of member functions here
+template <typename T, typename PComparator>
+size_t Heap<T,PComparator>::size() const{
+  return items.size(); 
+}
+
+template <typename T, typename PComparator>
+bool Heap<T,PComparator>::empty() const{
+  bool empty = false; 
+  if (items.size() == 1) {
+    empty = true; 
+  }
+  return empty; 
+}
+
+template <typename T, typename PComparator>
+void Heap<T,PComparator>::push(const T& item) {
+  items.push_back(item); 
+  trickleUp(items.size() - 1);  
+}
+
 
 
 // We will start top() for you to handle the case of 
@@ -81,14 +121,11 @@ T const & Heap<T,PComparator>::top() const
     // ================================
     // throw the appropriate exception
     // ================================
-
-
+    throw std::underflow_error("The Heap is Empty"); 
   }
   // If we get here we know the heap has at least 1 item
   // Add code to return the top element
-
-
-
+  return items[1]; 
 }
 
 
@@ -101,14 +138,43 @@ void Heap<T,PComparator>::pop()
     // ================================
     // throw the appropriate exception
     // ================================
-
-
+    throw std::underflow_error("The Heap is Empty"); 
   }
-
-
-
+  items[1] = items.back(); 
+  items.pop_back(); 
+  trickleDown(1); 
 }
 
+template <typename T, typename PComparator>
+void Heap<T,PComparator>::trickleDown(int index) {
+  int left = (index * n); 
+  //int right = (index * n) + 1; 
+  if (left > items.size()) { 
+    return; 
+  }
+  int smaller = (index * n); 
+  for ( int i = 1; i < n; i++) {
+    if (smaller + i < items.size()) {
+      int r = smaller + i;  
+      if (compare(items[r], items[smaller])) {
+        smaller = r; 
+        }
+      }
+    }
+  if (compare(items[index], items[smaller])) {
+    std::swap(items[index], items[smaller]); 
+    trickleDown(smaller); 
+  }
+}
 
+template <typename T, typename PComparator>
+void Heap<T,PComparator>::trickleUp(int index) {
+  int parent = index/n; 
+  while (parent >= 1 && compare(items[index], items[parent]) ) {
+    std::swap(items[parent],items[index]); 
+    index = parent; 
+    parent = index/n; 
+  }
+}
 
 #endif
