@@ -7,4 +7,5 @@ stack_test
 llrec-Test 
 heap-Test
 llrec
+heap_test/heap_tests
 *.gch

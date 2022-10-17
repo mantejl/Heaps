@@ -148,11 +148,10 @@ void Heap<T,PComparator>::pop()
 template <typename T, typename PComparator>
 void Heap<T,PComparator>::trickleDown(int index) {
   int left = (index * n); 
-  //int right = (index * n) + 1; 
-  if (left > items.size()) { 
+  if (left - (n-2) < items.size()) { 
     return; 
   }
-  int smaller = (index * n); 
+  int smaller = left; 
   for ( int i = 1; i < n; i++) {
     if (smaller + i < items.size()) {
       int r = smaller + i;  
