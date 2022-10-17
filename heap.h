@@ -4,6 +4,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include <utility>
+#include <iostream>
 #include <vector>
 
 template <typename T, typename PComparator = std::less<T> >
@@ -80,7 +81,6 @@ template <typename T, typename PComparator>
 Heap<T,PComparator>::Heap(int m, PComparator c) {
   compare = c; 
   n = m;  
-  //items.push_back(NULL); 
 }
 
 template <typename T, typename PComparator>
@@ -95,11 +95,6 @@ size_t Heap<T,PComparator>::size() const{
 
 template <typename T, typename PComparator>
 bool Heap<T,PComparator>::empty() const{
-  // bool empty = false; 
-  // if (items.size() == 1) {
-  //   empty = true; 
-  // }
-  //return empty; 
   return items.empty(); 
 }
 
@@ -148,23 +143,22 @@ void Heap<T,PComparator>::pop()
 
 template <typename T, typename PComparator>
 void Heap<T,PComparator>::trickleDown(int index) {
-  int left = (index * n) + 1;
-  int right = (index * n) + 2; 
-  if (left > items.size() && right > items.size()) { 
+  unsigned int left = (index * n) + 1;
+	unsigned int right = (index * n) + 2; 
+  if (left >= items.size() && right >= items.size()) { 
     return; 
   }
-  int smaller = left; 
-  for ( int i = 0; i < n; i++) {
-    if ((smaller+1) + i < items.size()) {
-      int r = smaller + 1 + i;  
-      if (compare(items[r], items[smaller])) {
-        smaller = r; 
-        }
-      }
-    }
-  if (compare(items[smaller], items[index])) {
-    std::swap(items[index], items[smaller]); 
-    trickleDown(smaller); 
+
+	for (int i = 0; i < n; i++) {
+		if (right + i < items.size()) {
+				if (compare(items[right+i], items[left])) {
+					left = right + i; 
+			}
+		}
+	}
+  if (compare(items[left], items[index])) {
+			std::swap(items[index], items[left]);
+			trickleDown(left); 
   }
 }
 
@@ -175,7 +169,7 @@ void Heap<T,PComparator>::trickleUp(int index) {
     std::swap(items[parent],items[index]); 
     index = parent; 
     parent = (index-1)/n; 
-  }
+  } 
 }
 
 #endif
