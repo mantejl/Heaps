@@ -303,7 +303,7 @@ TEST(HeapStress, 50x50RandomElements_QuaternaryHeap)
 {
 	const RandomSeed masterSeed = 99;
 	const size_t numTrials = 50;
-	const size_t numElements = 50;
+	const size_t numElements = 7;
 	const size_t d = 4;
 
 	std::vector<RandomSeed> seedVector = makeRandomSeedVector(numTrials, masterSeed);
@@ -312,7 +312,6 @@ TEST(HeapStress, 50x50RandomElements_QuaternaryHeap)
 	{
 		std::vector<int> data = makeRandomNumberVector<int>(numElements, 0, numElements * 10, trialSeed, true);
 		Heap<int> heap(d);
-
 		for(int value : data)
 		{
 			heap.push(value);
