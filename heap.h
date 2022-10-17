@@ -80,7 +80,7 @@ template <typename T, typename PComparator>
 Heap<T,PComparator>::Heap(int m, PComparator c) {
   compare = c; 
   n = m;  
-  items.push_back(NULL); 
+  //items.push_back(NULL); 
 }
 
 template <typename T, typename PComparator>
@@ -95,17 +95,18 @@ size_t Heap<T,PComparator>::size() const{
 
 template <typename T, typename PComparator>
 bool Heap<T,PComparator>::empty() const{
-  bool empty = false; 
-  if (items.size() == 1) {
-    empty = true; 
-  }
-  return empty; 
+  // bool empty = false; 
+  // if (items.size() == 1) {
+  //   empty = true; 
+  // }
+  //return empty; 
+  return items.empty(); 
 }
 
 template <typename T, typename PComparator>
 void Heap<T,PComparator>::push(const T& item) {
   items.push_back(item); 
-  trickleUp(items.size() - 1);  
+  trickleUp(items.size()-1);  
 }
 
 
@@ -125,7 +126,7 @@ T const & Heap<T,PComparator>::top() const
   }
   // If we get here we know the heap has at least 1 item
   // Add code to return the top element
-  return items[1]; 
+  return items.front(); 
 }
 
 
@@ -140,40 +141,40 @@ void Heap<T,PComparator>::pop()
     // ================================
     throw std::underflow_error("The Heap is Empty"); 
   }
-  items[1] = items.back(); 
+  items[0] = items.back(); 
   items.pop_back(); 
-  trickleDown(1); 
+  trickleDown(0); 
 }
 
 template <typename T, typename PComparator>
 void Heap<T,PComparator>::trickleDown(int index) {
-  int left = (index * n);
-  int right = (index * n ) + 1;  
-  if (left < items.size() && right < items.size()) { 
+  int left = (index * n) + 1;
+  int right = (index * n) + 2; 
+  if (left > items.size() && right > items.size()) { 
     return; 
   }
   int smaller = left; 
-  for ( int i = 1; i < n; i++) {
-    if (smaller + i < items.size()) {
-      int r = smaller + i;  
+  for ( int i = 0; i < n; i++) {
+    if ((smaller+1) + i < items.size()) {
+      int r = smaller + 1 + i;  
       if (compare(items[r], items[smaller])) {
         smaller = r; 
         }
       }
     }
-  if (compare(items[index], items[smaller])) {
-    std::swap(items[smaller],items[index]); 
+  if (compare(items[smaller], items[index])) {
+    std::swap(items[index], items[smaller]); 
     trickleDown(smaller); 
   }
 }
 
 template <typename T, typename PComparator>
 void Heap<T,PComparator>::trickleUp(int index) {
-  int parent = index/n; 
-  while (parent >= 1 && compare(items[index], items[parent]) ) {
+  int parent = (index-1)/n; 
+  while (parent >= 0 && compare(items[index], items[parent]) ) {
     std::swap(items[parent],items[index]); 
     index = parent; 
-    parent = index/n; 
+    parent = (index-1)/n; 
   }
 }
 
