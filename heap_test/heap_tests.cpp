@@ -303,7 +303,7 @@ TEST(HeapStress, 50x50RandomElements_QuaternaryHeap)
 {
 	const RandomSeed masterSeed = 99;
 	const size_t numTrials = 50;
-	const size_t numElements = 7;
+	const size_t numElements = 50;
 	const size_t d = 4;
 
 	std::vector<RandomSeed> seedVector = makeRandomSeedVector(numTrials, masterSeed);

@@ -145,10 +145,9 @@ template <typename T, typename PComparator>
 void Heap<T,PComparator>::trickleDown(int index) {
   unsigned int left = (index * n) + 1;
 	unsigned int right = (index * n) + 2; 
-  if (left >= items.size() && right >= items.size()) { 
+  if (right >= items.size() && (left >= items.size() || items.size() == 0 ) ) { 
     return; 
   }
-
 	for (int i = 0; i < n; i++) {
 		if (right + i < items.size()) {
 				if (compare(items[right+i], items[left])) {
