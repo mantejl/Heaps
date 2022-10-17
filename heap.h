@@ -147,8 +147,9 @@ void Heap<T,PComparator>::pop()
 
 template <typename T, typename PComparator>
 void Heap<T,PComparator>::trickleDown(int index) {
-  int left = (index * n); 
-  if (left - (n-2) < items.size()) { 
+  int left = (index * n);
+  int right = (index * n ) + 1;  
+  if (left < items.size() && right < items.size()) { 
     return; 
   }
   int smaller = left; 
@@ -161,7 +162,7 @@ void Heap<T,PComparator>::trickleDown(int index) {
       }
     }
   if (compare(items[index], items[smaller])) {
-    std::swap(items[index], items[smaller]); 
+    std::swap(items[smaller],items[index]); 
     trickleDown(smaller); 
   }
 }
