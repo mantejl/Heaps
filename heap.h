@@ -143,18 +143,23 @@ void Heap<T,PComparator>::pop()
 
 template <typename T, typename PComparator>
 void Heap<T,PComparator>::trickleDown(int index) {
+  // creating left and right children
   unsigned int left = (index * n) + 1;
 	unsigned int right = (index * n) + 2; 
+  // checking leaf nodes
   if (right >= items.size() && (left >= items.size() || items.size() == 0 ) ) { 
     return; 
   }
+  
+  // going through all children
 	for (int i = 0; i < n; i++) {
-		if (right + i < items.size()) {
+		if (right + i < items.size()) { // checking if right child exists
 				if (compare(items[right+i], items[left])) {
 					left = right + i; 
 			}
 		}
 	}
+  // swapping if compare is true and recursive call. 
   if (compare(items[left], items[index])) {
 			std::swap(items[index], items[left]);
 			trickleDown(left); 
@@ -163,9 +168,9 @@ void Heap<T,PComparator>::trickleDown(int index) {
 
 template <typename T, typename PComparator>
 void Heap<T,PComparator>::trickleUp(int index) {
-  int parent = (index-1)/n; 
-  while (parent >= 0 && compare(items[index], items[parent]) ) {
-    std::swap(items[parent],items[index]); 
+  int parent = (index-1)/n; // parent node
+  while (parent >= 0 && compare(items[index], items[parent]) ) { // checking if parent is valid
+    std::swap(items[parent],items[index]); // swapping 
     index = parent; 
     parent = (index-1)/n; 
   } 

@@ -27,21 +27,25 @@ template <typename T>
 Stack<T>::~Stack() {
 }
 
+// size check
 template <typename T>
 size_t Stack<T>::size() const{
     return std::vector<T>::size(); 
 }
 
+// empty check
 template <typename T>
 bool Stack<T>::empty() const{
     return std::vector<T>::empty(); 
 }
 
+// push function 
 template <typename T>
 void Stack<T>::push(const T& item) {
     std::vector<T>::push_back(item); 
 }
 
+// checking if vector is empty and throwing error, if not then adding to back 
 template <typename T>
 void Stack<T>::pop() {
     if (std::vector<T>::empty()) {
@@ -51,6 +55,7 @@ void Stack<T>::pop() {
     }
 }
 
+// checking if vector is empty and throwing error, if not then returning front reference
 template <typename T>
 const T& Stack<T>::top() const {
     if (std::vector<T>::empty()) {
