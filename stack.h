@@ -45,7 +45,7 @@ void Stack<T>::push(const T& item) {
     std::vector<T>::push_back(item); 
 }
 
-// checking if vector is empty and throwing error, if not then adding to back 
+// checking if vector is empty and throwing error, if not then removing element at top
 template <typename T>
 void Stack<T>::pop() {
     if (std::vector<T>::empty()) {
@@ -61,7 +61,7 @@ const T& Stack<T>::top() const {
     if (std::vector<T>::empty()) {
         throw std::underflow_error("The Stack is Empty"); 
     } else {
-        return std::vector<T>::front(); 
+        return std::vector<T>::back(); 
     }
     
 }
