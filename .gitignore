@@ -10,3 +10,5 @@ llrec
 heap_test/heap_tests
 *.gch
 logicsim/logicsim
+hw3_tests/
+hw3_tests.tar.gz

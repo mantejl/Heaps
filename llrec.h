@@ -84,18 +84,16 @@ Node* llfilter(Node* head, Comp pred)
     if (head == nullptr) {
         return nullptr; 
     } 
-    // recursive call with llfilter 
-    Node* tmp = llfilter(head->next, pred);
     // checking if the functor of head->val will return true 
-    if (pred(head->val)) {
+    if (pred(head->val) != true) {
+        head -> next = llfilter(head->next, pred); 
+        return head;
+        
+    } else if (pred(head->val)){ 
         // setting head->next to tmp 
-        head -> next = tmp; 
-        // returning head
-        return head; 
-    } else { 
-        // deleting head and returning tmp 
-        delete head;
-        return tmp;  
+        Node* tmp = head -> next; 
+        delete head; 
+        return llfilter(tmp, pred);  
     }
 }
 
